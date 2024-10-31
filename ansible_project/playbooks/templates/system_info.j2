@@ -1,0 +1,12 @@
+---
+hostname: {{ ansible_hostname }}
+os:
+  distribution: {{ ansible_distribution }}
+  version: {{ ansible_distribution_version }}
+cpu: {{ ansible_processor[2] }}
+memory: {{ ansible_memtotal_mb }} MB
+network:
+  interfaces:
+    - name: {{ ansible_eth0.interface | default('N/A') }}
+      mac: {{ ansible_eth0.macaddress | default('N/A') }}
+      ipv4: {{ ansible_eth0.ipv4.address | default('N/A') }}

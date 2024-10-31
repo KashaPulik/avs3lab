@@ -1,0 +1,9 @@
+- name: Gather system information and save it to a file
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Create system info file from template
+      template:
+        src: templates/system_info.j2
+        dest: /tmp/system_info.yaml
