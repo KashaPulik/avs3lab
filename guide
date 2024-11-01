@@ -1,0 +1,15 @@
+~/code/avs3lab/containers$ docker build -t ubuntu .
+docker run -d -p 2222:22 --name ubuntu_host1 ubuntu
+docker run -d -p 2223:22 --name ubuntu_host2 ubuntu
+~/code/avs3lab/ansible_project$ ansible -m ping all
+ansible-playbook playbooks/gather_system_info.yml
+ansible -m shell -a "cat /tmp/system_info.yaml" all
+
+[failed]
+ansible-playbook playbooks/docker_deploy.yml
+
+[optional]
+ssh-keygen -f "/home/pahansan/.ssh/known_hosts" -R "[localhost]:2222"
+ssh-keygen -f "/home/pahansan/.ssh/known_hosts" -R "[localhost]:2223"
+chmod 600 /home/pahansan/code/avs3lab/containers/id_rsa
+chmod 700 /home/pahansan/code/avs3lab/containers
