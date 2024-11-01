@@ -1,14 +1,19 @@
 FROM ubuntu:latest
 
 RUN apt-get update && \
-    apt-get install -y openssh-server python3 python3-pip && \
+    apt-get install -y openssh-server python3 sudo && \
     mkdir /var/run/sshd
 
-RUN useradd -rm -d /home/user -s /bin/bash -g root -G sudo -u 1001 user && \
-    echo 'user:user_password' | chpasswd && \
-    sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
-    echo 'AllowUsers user' >> /etc/ssh/sshd_config
+RUN useradd -m -s /bin/bash user && \
+    echo 'user:password' | chpasswd && \
+    adduser user sudo
+
+RUN mkdir /home/user/.ssh && \
+    chown user:user /home/user/.ssh && \
+    chmod 700 /home/user/.ssh
+
+COPY --chown=user:user id_rsa.pub /home/user/.ssh/authorized_keys
+RUN chmod 600 /home/user/.ssh/authorized_keys
 
 EXPOSE 22
 

@@ -1,0 +1,5 @@
+---
+- hosts: containers
+  become: true
+  roles:
+    - generate_docker_compose

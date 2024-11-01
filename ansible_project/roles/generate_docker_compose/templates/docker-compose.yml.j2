@@ -1,0 +1,13 @@
+version: '3'
+services:
+  ubuntu_host1:
+    image: ubuntu:latest
+    ports:
+      - "2222:22"
+    restart: always
+
+  ubuntu_host2:
+    image: ubuntu:latest
+    ports:
+      - "2223:22"
+    restart: always

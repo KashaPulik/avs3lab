@@ -1,0 +1,9 @@
+- name: Generate docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/pahansan/code/avs3lab/containers/docker-compose.yml
+
+- name: Start containers using docker-compose
+  community.docker.docker_compose_v2:
+    project_src: /home/pahansan/code/avs3lab/containers
+    restarted: true
